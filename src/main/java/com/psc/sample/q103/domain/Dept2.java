@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dept {
+public class Dept2 {
 
     @Id
     Integer deptNo; // 부서번호
