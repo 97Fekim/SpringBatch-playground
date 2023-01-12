@@ -4,6 +4,9 @@ logging:
     com.psc.sample: debug
 
 spring:
+  batch:
+    job:
+      names: ${job.name:NONE}
   jpa:
     hibernate:
       ddl-auto: update
