@@ -1,6 +1,7 @@
 package com.psc.sample.q103.batch;
 
 
+import com.psc.sample.q103.custom.CustomPassThroughLineAggregator;
 import com.psc.sample.q103.dto.OneDto;
 import com.psc.sample.q103.dto.TwoDto;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +38,13 @@ public class TextJob2 {
     public Step textJob2_batchStep1() {
         return stepBuilderFactory.get("textJob2_batchStep1")
                 .<OneDto, OneDto>chunk(chunkSize)
-                .reader(textJob_FileReader())
-                .writer(oneDto -> oneDto.stream().forEach(i -> {
-                    log.debug(i.toString());
-                })).build();
+                .reader(textJob2_FileReader())
+                .writer(textJob2_FilWriter())
+                .build();
     }
 
     @Bean
-    public FlatFileItemReader<OneDto> textJob_FileReader() {
+    public FlatFileItemReader<OneDto> textJob2_FileReader() {
         FlatFileItemReader<OneDto> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setResource(new ClassPathResource("sample/textJob2_input.txt"));
         flatFileItemReader.setLineMapper(((line, lineNumber) -> new OneDto(lineNumber + "_" + line)));
@@ -55,9 +55,11 @@ public class TextJob2 {
     @Bean
     public FlatFileItemWriter textJob2_FilWriter() {
 
-        // TODO
-        return new FlatFileItemWriterBuilder<>().build();
-
+        return new FlatFileItemWriterBuilder<>()
+                .name("textJob2_FileWriter")
+                .resource(new FileSystemResource("output/textJob2_output.txt"))
+                .lineAggregator(new CustomPassThroughLineAggregator<>())
+                .build();
     }
 
 }
