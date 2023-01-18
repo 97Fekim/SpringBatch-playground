@@ -29,8 +29,8 @@ public class TextJob2 {
 
     @Bean
     public Job textJob2_batchBuild() {
-        return jobBuilderFactory.get("textJob2")
-                .start(textJob2_batchStep1())
+        return jobBuilderFactory.get("textJob2")    // 이름이 "textJob2" 인 JOB을 만들겠다.
+                .start(textJob2_batchStep1())       // 시작 스탭은 textJob2_batchStep1()이다.
                 .build();
     }
 
