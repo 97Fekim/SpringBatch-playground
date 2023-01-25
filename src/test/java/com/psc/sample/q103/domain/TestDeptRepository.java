@@ -15,9 +15,7 @@ public class TestDeptRepository {
     @Commit
     public void dept01() {
 
-        for(int i=1; i<101; ++i) {
-            deptRepository.save(new Dept(i, "dName_" + String.valueOf(i), "loc_" + String.valueOf(i)));
-        }
+        deptRepository.deleteAll();
 
     }
 
