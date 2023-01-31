@@ -15,7 +15,7 @@ public class TestDeptRepository {
     @Commit
     public void dept01() {
 
-        deptRepository.deleteAll();
+        //deptRepository.deleteAll();
 
     }
 
