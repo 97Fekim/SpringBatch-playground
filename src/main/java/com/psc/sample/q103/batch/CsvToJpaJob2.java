@@ -12,6 +12,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +48,9 @@ public class CsvToJpaJob2 {
                 .reader(csvToJpaJob2_FileReader())
                 .processor(csvToJpaJob2_processor())
                 .writer(csvToJpaJob2_dbItemWriter())
+                .faultTolerant()
+                .skip(FlatFileParseException.class)
+                .skipLimit(2)
                 .build();
     }
 
