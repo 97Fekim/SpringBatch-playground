@@ -81,7 +81,7 @@ public class MultiJob1 {
 
     @StepScope
     @Bean
-    public ItemProcessor<TwoDto, TwoDto> multiJob1_processor(@Value("#{jobParameters[versuion]}")String version) {
+    public ItemProcessor<TwoDto, TwoDto> multiJob1_processor(@Value("#{jobParameters[version]}")String version) {
         log.debug("processor version : " + version);
 
         return twoDto -> new TwoDto(twoDto.getOne(), twoDto.getTwo());
@@ -94,7 +94,7 @@ public class MultiJob1 {
                 .name("multiJob1_writer")
                 .resource(new FileSystemResource("sample/" + outFileName))
                 .lineAggregator(item -> {
-                    return item.getOne() + " --- " + item.getTwo();
+                    return item.getOne() + " ----- " + item.getTwo();
                 }).build();
     }
 
